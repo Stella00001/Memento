@@ -2,18 +2,18 @@
 Log show --predicate 'eventMessage contains "Previous shutdown cause"' --last 1024h | awk '
 BEGIN{
 FS=" ";
-scode["8"]="Unknown.";
+scode["8"]="Power Loss. Battery Disconnected or Battery Disconnect Button pressed. RTC Reset.";
 scode["7"]="CPU thread error. try Safe Mode.";
 scode["6"]="unknown.";
 scode["5"]="Correct Shut Down.";
 scode["3"]="Hard shutdown.";
 scode["1"]="User-initiated Restart.";
-scode["0"]="Power disconnected.";
+scode["0"]="Power Loss: Power Cable disconnected.";
 scode["-2"]="Unknown.";
 scode["-3"]="Multiple temperature sensors exceeded limits.";
 scode["-5"]="Unknown.";
 scode["-8"]="Unknown.";
-scode["-11"]="Unknown.";
+scode["-11"]="Hard shutdown (TouchID units).";
 scode["-14"]="Electricity spike/surge. On Mac Pro, check PSU.";
 scode["-20"]="BridgeOS T2-initiated shutdown.";
 scode["-30"]="Unknown.";
@@ -32,7 +32,7 @@ scode["-75"]="Communication issue with AC adapter.";
 scode["-78"]="Incorrect current value coming from AC adapter.";
 scode["-79"]="Incorrect current value coming from battery.";
 scode["-81"]="Unknown.";
-scode["-82"]="Unknown.Potentially thermal sensor communication issue?";
+scode["-82"]="Unknown. Potentially thermal sensor communication issue?";
 scode["-86"]="Proximity temperature exceeds limits.";
 scode["-95"]="CPU temperature exceeds limits.";
 scode["-100"]="Power supply temperature exceeds limits.";
@@ -47,3 +47,4 @@ scode["-128"]="Unknown. Possibly linked to memory issue."
 }
 /cause/ {print "Shutdown Detected on",$1,"at",substr($2,0,8),"--> Code",$13,"-->",scode[$13]}'
 #https://krypted.com/lists/comprehensive-list-of-mac-os-x-error-codes/ possibly useful?
+#https://opensource.apple.com/source/CarbonHeaders/CarbonHeaders-18.1/MacErrors.h possibly useful>
